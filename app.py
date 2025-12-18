@@ -1,4 +1,8 @@
+import altair as alt
+import numpy as np
+import pandas as pd
 import streamlit as st
+
 import re
 import networkx as nx
 import pandas as pd
@@ -44,6 +48,10 @@ def build_word_graph(tokens):
 
     return G
 
+
+
+
+
 # =========================
 # STREAMLIT UI
 # =========================
@@ -57,6 +65,12 @@ uploaded_file = st.file_uploader(
     type=["txt", "pdf"]
 )
 
+st.subheader("📝 Atau tempel teks dokumen")
+manual_text = st.text_area(
+    "Paste isi jurnal di sini",
+    height=250
+)
+
 top_k = st.slider("Jumlah keyword yang ditampilkan", 5, 30, 20)
 
 if uploaded_file is not None:
@@ -67,8 +81,11 @@ if uploaded_file is not None:
         reader = PdfReader(uploaded_file)
         text = ""
         for page in reader.pages:
-            text += page.extract_text()
-
+            if page.extract_text():
+                    text += page.extract_text()
+                
+elif manual_text.strip() != "":
+    text = manual_text
 
     st.subheader("📄 Contoh isi dokumen")
     st.text(text[:500])
@@ -82,6 +99,8 @@ if uploaded_file is not None:
 
         # PageRank
         pagerank = nx.pagerank(G, weight="weight")
+
+
 
         # Ambil top keyword
         pr_df = pd.DataFrame(pagerank.items(), columns=["Keyword", "PageRank"])
