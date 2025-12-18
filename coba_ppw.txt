@@ -1,0 +1,50 @@
+ABSTRACT 
+Submitted 
+Revised 
+Accepted 
+:   08 Januari 2024 
+:   26 Januari 2024 
+: 01 Februari 2024 
+The DANA application is a digital wallet application that is widely used by Indonesians because of its ease of 
+use and the features offered provide convenience in everyday life. However, there are some shortcomings of this 
+application that cause users to reconsider their use. Reviews from other users are one of the guidelines for someone 
+in making a decision to use this application. Sentiment analysis is a method to categorize user reviews into positive 
+and negative reviews. The purpose of this research is to evaluate the results of sentiment classification of DANA 
+application user reviews on the Google Play Store service using the Naïve Bayes Classifier method and Information 
+Gain feature selection. In addition, this study aims to assess the effect of applying IG feature selection on the 
+performance of the resulting model. In this study, reviews are divided into two categories, namely positive and 
+negative based on lexicon-based labeling. Furthermore, data weighting, feature selection, and data division are 
+carried out with a proportion of 80% train data and 20% test data before model building. There are two models, 
+namely a model without feature selection (NBC model) and a model with feature selection (NBC-IG model). The 
+evaluation results showed that the model without feature selection (NBC model) with 1106 features performed well, 
+with 82.91% accuracy, 83.96% precision, and 90.23% recall. Meanwhile, the model with feature selection 
+(NBC+IG model) with 536 features showed higher performance, with 85.09% accuracy, 85.79% precision, and 
+92.09% recall. The application of IG feature selection with the IG value limit parameter > 0.01 in the NBC model 
+successfully reduced the number of features by 570, and improved model performance with an increase in accuracy 
+by 2.18%, precision by 1.83%, and recall by 1.86%. 
+Keywords: DANA application, Information Gain, NBC, Sentiment Analysis.  
+This is an open access article under the Creative Commons 4.0 Attribution License, which permits unrestricted use, distribution, and reproduction in any 
+medium, provided the original work is properly cited. ©2022 by author and Universitas Negeri  Padang.
+I. 
+PENDAHULUAN 
+Kemajuan teknologi telah mencakup segala aspek kehidupan, termasuk dalam proses pembayaran atau 
+transaksi, sehingga masyarakat cenderung beralih ke transaksi digital. Pada tahun 2018 hingga tahun 2023, terjadi 
+peningkatan yang sangat signifikan dalam nilai transaksi uang elektronik. Menurut laporan Bank Indonesia (2023), 
+pada bulan April 2023, nilai transaksi mencapai Rp 37,46 triliun. Angka ini menunjukkan kenaikan sebesar 1,4% 
+dibandingkan dengan bulan sebelumnya (Maret 2023), dan lebih tinggi 5,8% dibandingkan dengan tahun 
+sebelumnya (April 2022). 
+Peningkatan nilai belanja uang elektronik dapat memicu banyaknya perusahaan rintisan yang mengembangkan 
+inovasi produk di bidang layanan keuangan berbasis teknologi, atau yang dikenal sebagai Financial Technology 
+(fintech). Salah satu fintech yang banyak digunakan di Indonesia adalah dompet digital seperti DANA, Link Aja, 
+GoPay dan OVO. DANA menjadi aplikasi keuangan yang paling banyak diunduh di Indonesia. DANA telah 
+digunakan oleh lebih dari 50 juta pengguna di Indonesia dengan rating 4,5 di Google Play Store.  
+Google Play Store toko aplikasi resmi untuk semua perangkat berbasis sistem operasi Android. Pada Google 
+Play Store, terdapat fitur rating dan ulasan aplikasi yang digunakan oleh pengguna untuk memberikan feedback 
+terkait aplikasi tersebut. Menurut Saputra dkk. (2019), ulasan telah menjadi alat yang efektif dan efisien untuk 
+memperoleh informasi mengenai suatu produk atau jasa. Di era digital saat ini, banyak pengguna mengandalkan 
+ulasan sebelum membuat keputusan untuk menggunakan suatu produk. Namun, jumlah ulasan yang mencapai 
+ratusan hingga jutaan membuat analisis manual menjadi sulit dilakukan (Masturoh dan Pohan, 2021). 
+Metode yang digunakan untuk menggali informasi dari teks ulasan dikenal dengan analisis sentimen. 
+Nurjanah dkk. (2017), memaparkan bahwa analisis sentimen bertujuan untuk menilai apakah pandangan atau 
+komentar terkait suatu isu bersifat negatif atau positif, serta mampu digunakan sebagai pedoman dalam 
+peningkatan layanan atau kualitas suatu produk. Dalam melakukan analisis sentimen, terdapat beragam metode
