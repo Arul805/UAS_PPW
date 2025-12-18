@@ -4,3 +4,4 @@ pandas
 matplotlib
 nltk
 PyPDF2
+scipy
