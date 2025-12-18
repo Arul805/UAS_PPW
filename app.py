@@ -1,8 +1,4 @@
-import altair as alt
-import numpy as np
-import pandas as pd
 import streamlit as st
-
 import re
 import networkx as nx
 import pandas as pd
@@ -48,42 +44,6 @@ def build_word_graph(tokens):
 
     return G
 
-
-
-def pagerank_manual(G, alpha=0.85, max_iter=100, tol=1e-6):
-    nodes = list(G.nodes())
-    n = len(nodes)
-
-    if n == 0:
-        return {}
-
-    node_index = {node: i for i, node in enumerate(nodes)}
-
-    # Adjacency matrix berbobot
-    A = np.zeros((n, n))
-
-    for u, v, data in G.edges(data=True):
-        w = data.get("weight", 1)
-        i, j = node_index[u], node_index[v]
-        A[j][i] += w
-        A[i][j] += w  # karena graph tidak berarah
-
-    # Normalisasi kolom
-    column_sums = A.sum(axis=0)
-    column_sums[column_sums == 0] = 1
-    M = A / column_sums
-
-    # PageRank init
-    pr = np.ones(n) / n
-
-    for _ in range(max_iter):
-        new_pr = alpha * M @ pr + (1 - alpha) / n
-        if np.linalg.norm(new_pr - pr, 1) < tol:
-            break
-        pr = new_pr
-
-    return {nodes[i]: pr[i] for i in range(n)}
-
 # =========================
 # STREAMLIT UI
 # =========================
@@ -97,12 +57,6 @@ uploaded_file = st.file_uploader(
     type=["txt", "pdf"]
 )
 
-st.subheader("📝 Atau tempel teks dokumen")
-manual_text = st.text_area(
-    "Paste isi jurnal di sini",
-    height=250
-)
-
 top_k = st.slider("Jumlah keyword yang ditampilkan", 5, 30, 20)
 
 if uploaded_file is not None:
@@ -113,11 +67,8 @@ if uploaded_file is not None:
         reader = PdfReader(uploaded_file)
         text = ""
         for page in reader.pages:
-            if page.extract_text():
-                    text += page.extract_text()
-                
-elif manual_text.strip() != "":
-    text = manual_text
+            text += page.extract_text()
+
 
     st.subheader("📄 Contoh isi dokumen")
     st.text(text[:500])
@@ -130,8 +81,7 @@ elif manual_text.strip() != "":
         G = build_word_graph(tokens)
 
         # PageRank
-        pagerank = pagerank_manual(G)
-
+        pagerank = nx.pagerank(G, weight="weight")
 
         # Ambil top keyword
         pr_df = pd.DataFrame(pagerank.items(), columns=["Keyword", "PageRank"])
