@@ -65,11 +65,7 @@ uploaded_file = st.file_uploader(
     type=["txt", "pdf"]
 )
 
-st.subheader("📝 Atau tempel teks dokumen")
-manual_text = st.text_area(
-    "Paste isi jurnal di sini",
-    height=250
-)
+
 
 top_k = st.slider("Jumlah keyword yang ditampilkan", 5, 30, 20)
 
@@ -84,8 +80,6 @@ if uploaded_file is not None:
             if page.extract_text():
                     text += page.extract_text()
                 
-elif manual_text.strip() != "":
-    text = manual_text
 
     st.subheader("📄 Contoh isi dokumen")
     st.text(text[:500])
