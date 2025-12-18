@@ -91,24 +91,39 @@ if uploaded_file is not None:
         # Bangun graph
         G = build_word_graph(tokens)
 
-        # PageRank
+        # =========================
+        # CENTRALITY MEASURES
+        # =========================
         pagerank = nx.pagerank(G, weight="weight")
+        degree_centrality = nx.degree_centrality(G)
+        betweenness_centrality = nx.betweenness_centrality(G, weight="weight")
+        closeness_centrality = nx.closeness_centrality(G)
 
+        # =========================
+        # DATAFRAME CENTRALITY
+        # =========================
+        centrality_df = pd.DataFrame({
+            "Keyword": list(pagerank.keys()),
+            "PageRank": list(pagerank.values()),
+            "Degree": [degree_centrality[k] for k in pagerank.keys()],
+            "Betweenness": [betweenness_centrality[k] for k in pagerank.keys()],
+            "Closeness": [closeness_centrality[k] for k in pagerank.keys()]
+        })
 
+        centrality_df = centrality_df.sort_values(
+            by="PageRank", ascending=False
+        ).head(top_k)
 
-        # Ambil top keyword
-        pr_df = pd.DataFrame(pagerank.items(), columns=["Keyword", "PageRank"])
-        pr_df = pr_df.sort_values(by="PageRank", ascending=False).head(top_k)
+        st.subheader("📊 Top Keyword & Centrality")
+        st.dataframe(centrality_df)
 
-        st.subheader("📊 Top Keyword berdasarkan PageRank")
-        st.dataframe(pr_df)
 
         # =========================
         # VISUALISASI GRAPH
         # =========================
         st.subheader("🕸️ Visualisasi Graph Kata")
 
-        sub_nodes = pr_df["Keyword"].tolist()
+        sub_nodes = centrality_df["Keyword"].tolist()
         subgraph = G.subgraph(sub_nodes)
 
         plt.figure(figsize=(10, 8))
